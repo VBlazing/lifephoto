@@ -2,11 +2,12 @@
  * @Author: VBlazing
  * @Date: 2025-09-02 17:52:05
  * @LastEditors: VBlazing
- * @LastEditTime: 2025-11-13 20:38:34
+ * @LastEditTime: 2025-11-16 00:17:31
  * @Description: layout
  */
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -35,6 +36,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );

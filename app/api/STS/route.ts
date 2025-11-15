@@ -2,11 +2,11 @@
  * @Author: VBlazing
  * @Date: 2025-11-14 15:10:16
  * @LastEditors: VBlazing
- * @LastEditTime: 2025-11-15 22:59:39
+ * @LastEditTime: 2025-11-16 00:00:29
  * @Description: 获取腾讯 cos 上传的临时密钥
  */
-import { NextResponse } from 'next/server';
 import STS from 'qcloud-cos-sts'
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   // 配置参数
@@ -48,7 +48,7 @@ export async function GET() {
     }],
   };
   try {
-    const data = await new Promise((res, rej) => {
+    const data: STS.CredentialData = await new Promise((res, rej) => {
       STS.getCredential({
         secretId: config.secretId as string,
         secretKey: config.secretKey as string,
