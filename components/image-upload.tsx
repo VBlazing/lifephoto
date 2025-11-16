@@ -2,7 +2,7 @@
  * @Author: VBlazing
  * @Date: 2025-11-13 23:21:44
  * @LastEditors: VBlazing
- * @LastEditTime: 2025-11-16 00:51:55
+ * @LastEditTime: 2025-11-16 23:50:33
  * @Description: image upload component
  */
 "use client";
@@ -19,10 +19,12 @@ import { getUAKey, locationToUrl } from "@/lib/utils";
 
 export default function ImageUpload({
   label,
+  name,
   value,
   onChange,
 }: {
   label: string;
+  name: string;
   value: string | null;
   onChange: (img: string | null) => void;
 }) {
@@ -37,12 +39,17 @@ export default function ImageUpload({
       toast.error("Please keep the file size less than 5MB.");
       return;
     }
+    const fileType = file.type.includes("image/")
+      ? file.type.split("image/")[1]
+      : "png";
+
     setLoading(true);
     const uaKey = getUAKey();
+    const dateStamp = new Date().getTime();
     const data = await cos.uploadFile({
       Bucket: "lifephoto-1253367486",
       Region: "ap-guangzhou",
-      Key: uaKey + "/" + file.name,
+      Key: `${uaKey}/${name}_${dateStamp}.${fileType}`,
       Body: file,
     });
     setLoading(false);
@@ -92,8 +99,8 @@ export default function ImageUpload({
               }}
               type="file"
               className="absolute top-0 left-0 z-[-1] h-full w-full rounded-lg opacity-0"
-              id="portrait"
-              name="portrait"
+              id={name}
+              name={name}
               accept="image/png, image/jpg, image/jpeg"
             />
           </Label>
